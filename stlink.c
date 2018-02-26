@@ -517,9 +517,11 @@ int stlink_swim_write_range(programmer_t *pgm, const stm8_device_t *device, unsi
         stlink_swim_write_byte(pgm, 0xae, device->regs.FLASH_DUKR);
         stlink_swim_write_byte(pgm, 0x56, device->regs.FLASH_DUKR);
     }
-    if(memtype == FLASH || memtype == EEPROM || memtype == OPT) {
-        stlink_swim_write_byte(pgm, 0x56, device->regs.FLASH_IAPSR);
-    }
+    
+// Can't find any logical reason to write 0x56 to FLASH_IAPSR
+//    if(memtype == FLASH || memtype == EEPROM || memtype == OPT) {
+//        stlink_swim_write_byte(pgm, 0x56, device->regs.FLASH_IAPSR);
+//    }
     int flash_block_size = device->flash_block_size;
 	for(i = 0; i < length; i+=flash_block_size) {
 		unsigned char block[128];
@@ -565,9 +567,10 @@ int stlink_swim_write_range(programmer_t *pgm, const stm8_device_t *device, unsi
 				fprintf(stderr, "Write error\n");
 		}
 	}
-    if(memtype == FLASH || memtype == EEPROM || memtype == OPT) {
-        stlink_swim_write_byte(pgm, 0x56, device->regs.FLASH_IAPSR);
-    }
+// Can't find any logical reason to write 0x56 to FLASH_IAPSR
+//    if(memtype == FLASH || memtype == EEPROM || memtype == OPT) {
+//        stlink_swim_write_byte(pgm, 0x56, device->regs.FLASH_IAPSR);
+//    }
 	stlink_finish_session(pgm);
 	return(length);
 }
